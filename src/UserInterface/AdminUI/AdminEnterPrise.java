@@ -32,6 +32,7 @@ public class AdminEnterPrise extends javax.swing.JPanel {
     public AdminEnterPrise() throws SQLException {
         initComponents();
         populateCombobox();
+        
     }
 
     /**
@@ -64,10 +65,6 @@ public class AdminEnterPrise extends javax.swing.JPanel {
 
         jLabel1.setText("Select EcoSystem:");
 
-        txtEnterPriseName.setText("jTextField1");
-
-        txtEnterPriseID.setText("jTextField2");
-
         jLabel2.setText("EnterPrise Name");
 
         jLabel3.setText("EnterPrise ID");
@@ -94,7 +91,7 @@ public class AdminEnterPrise extends javax.swing.JPanel {
                 {null, null, null}
             },
             new String [] {
-                "EnterPrise Name", "EnterPrise ID", "EcoSystem"
+                "EnterPrise ID", "EnterPrise Name", "EcoSystem"
             }
         ));
         jScrollPane1.setViewportView(tblEnterPrise);
@@ -141,9 +138,9 @@ public class AdminEnterPrise extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnCreate)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtEnterPriseID, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                                .addComponent(txtEnterPriseID)
                                 .addComponent(txtEnterPriseName)
-                                .addComponent(cbxEcoSystem, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addComponent(cbxEcoSystem, 0, 145, Short.MAX_VALUE)))))
                 .addContainerGap(116, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -180,64 +177,68 @@ public class AdminEnterPrise extends javax.swing.JPanel {
     }//GEN-LAST:event_cbxEcoSystemActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        
         try {
             // TODO add your handling code here:
-            populateEcosystemTable();
+            populateEnterPriseTable();
         } catch (SQLException ex) {
-            Logger.getLogger(SystemAdminManageEcosystem.class.getName()).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminEnterPrise.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
-        // TODO add your handling code here:
-        int EnterPrise = Integer.parseInt(txtEnterPriseID.getText());
-        String EnterPriseName = txtEnterPriseName.getText();
-        String Ecosystem = (String) cbxEcoSystem.getSelectedItem();
-        boolean checkData = false;
-        for(ConfigureEnterPrise checkEnterPrise:ConfigureEcoSystem.EnterPriseList){
-            if(checkEnterPrise.getEnterPriseName().equals(EnterPriseName)){
-                checkData =true;
-                break;
-
-            }
-            else{
-                checkData = false;
-            }
-        }
-        System.out.println(checkData);
-        if(checkData == false){
-            ConfigureEnterPrise createEnterPrise = new ConfigureEnterPrise();
-            createEnterPrise.setEnterPriseName(EnterPriseName);
-            createEnterPrise.setEnterPriseID(EnterPrise);
-            ConfigureEcoSystem.EnterPriseList.add(createEnterPrise);
-        }
-        int size = ConfigureEcoSystem.EnterPriseList.size();
-
-        System.out.println(size);
-
         try {
-            
-                ResultSet rs1 = ConfigureEnterPrise.CheckEnterPriseTableforData(EnterPriseName,Ecosystem);
-                if(rs1.next()){
-                    JOptionPane.showMessageDialog(this, "EnterPrise Already Exists");
+            // TODO add your handling code here:
+            int EnterPrise = Integer.parseInt(txtEnterPriseID.getText());
+            String EnterPriseName = txtEnterPriseName.getText();
+            String Ecosystem = (String) cbxEcoSystem.getSelectedItem();
+            boolean checkData = false;
+            for(ConfigureEnterPrise checkEnterPrise:ConfigureEcoSystem.EnterPriseList){
+                if(checkEnterPrise.getEnterPriseName().equals(EnterPriseName)){
+                    checkData =true;
+                    break;
+                    
                 }
                 else{
-                    boolean isCreated = ConfigureEnterPrise.CreateDatainEnterPriseTable(EnterPrise, EnterPriseName,Ecosystem);
-                    populateEcosystemTable();
-                    if(isCreated){
-                        JOptionPane.showMessageDialog(this, "EnterPrise Created");
-                    }
-                
-
-            
-            
-
+                    checkData = false;
+                }
             }
+            System.out.println(checkData);
+            if(checkData == false){
+                ConfigureEnterPrise createEnterPrise = new ConfigureEnterPrise();
+                createEnterPrise.setEnterPriseName(EnterPriseName);
+                createEnterPrise.setEnterPriseID(EnterPrise);
+                ConfigureEcoSystem.EnterPriseList.add(createEnterPrise);
+            }
+            int size = ConfigureEcoSystem.EnterPriseList.size();
+            
+            System.out.println(size);
+            
+            
+
+            ResultSet rs1 = ConfigureEnterPrise.CheckEnterPriseTableforData(EnterPriseName,Ecosystem);
+            if(rs1.next()){
+                JOptionPane.showMessageDialog(this, "EnterPrise Already Exists");
+            }
+            else{
+                boolean isCreated = ConfigureEnterPrise.CreateDatainEnterPriseTable(EnterPrise, EnterPriseName,Ecosystem);
+                populateEnterPriseTable();
+                if(isCreated){
+                    JOptionPane.showMessageDialog(this, "EnterPrise Created");
+                }
+                
+                
+                
+                
+                
+            }
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(AdminEnterPrise.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
 
             
-        } catch (SQLException ex) {
-            Logger.getLogger(SystemAdminManageEcosystem.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
 
     }//GEN-LAST:event_btnCreateActionPerformed
 
@@ -254,15 +255,21 @@ public class AdminEnterPrise extends javax.swing.JPanel {
             int selectionButton = JOptionPane.YES_NO_OPTION;
             int selectionResult = JOptionPane.showConfirmDialog(null, "Confirm Update?","Warning",selectionButton);
             if(selectionResult == JOptionPane.YES_OPTION){
+               
                 try {
                     ConfigureEnterPrise.UpdateDatainEnterPriseTable(UpdateEnterPriseID, UpdateEnterPriseName,UpdateEcosystem,EnterPriseName,Ecosystem);
-                    populateEcosystemTable();
+                } catch (SQLException ex) {
+                    java.util.logging.Logger.getLogger(AdminEnterPrise.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                }
+                try {
+                    populateEnterPriseTable();
+                } catch (SQLException ex) {
+                    java.util.logging.Logger.getLogger(AdminEnterPrise.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                }
                     txtEnterPriseName.setText("");
                     txtEnterPriseID.setText("");
 
-                } catch (SQLException ex) {
-                    Logger.getLogger(SystemAdminManageEcosystem.class.getName()).log(Level.SEVERE, null, ex);
-                }
+               
 
             }
 
@@ -277,15 +284,22 @@ public class AdminEnterPrise extends javax.swing.JPanel {
         int selectRow = tblEnterPrise.getSelectedRow();
         if(selectRow>=0){
             String EnterPriseName = (String) tblEnterPrise.getValueAt(selectRow, 1);
+            String Ecosystem = (String) tblEnterPrise.getValueAt(selectRow, 2);
             int selectionButton = JOptionPane.YES_NO_OPTION;
             int selectionResult = JOptionPane.showConfirmDialog(null, "Confirm Delete?","Warning",selectionButton);
             if(selectionResult == JOptionPane.YES_OPTION){
+                
                 try {
-                    ConfigureEcoSystem.DeleteDatafromEcoSystemTable(EcoName);
-                    populateEcosystemTable();
+                    ConfigureEnterPrise.DeleteDatafromEnterPriseSystemTable(EnterPriseName, Ecosystem);
                 } catch (SQLException ex) {
-                    Logger.getLogger(SystemAdminManageEcosystem.class.getName()).log(Level.SEVERE, null, ex);
+                    java.util.logging.Logger.getLogger(AdminEnterPrise.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
                 }
+                try {
+                    populateEnterPriseTable();
+                } catch (SQLException ex) {
+                    java.util.logging.Logger.getLogger(AdminEnterPrise.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                }
+                
 
             }
 
@@ -322,12 +336,12 @@ public class AdminEnterPrise extends javax.swing.JPanel {
         }
     }
     
-    private void populateEcosystemTable() throws SQLException{
-        DefaultTableModel EcoSystemTable = (DefaultTableModel) tblEnterPrise.getModel();
-        ResultSet rs1 = ConfigureEcoSystem.GetAllDataFromEcoSystemTable();
+    private void populateEnterPriseTable() throws SQLException{
+        DefaultTableModel EnterPriseTable = (DefaultTableModel) tblEnterPrise.getModel();
+        ResultSet rs1 = ConfigureEnterPrise.GetAllDataFromEnterPriseSystemTable();
         ResultSetMetaData metaData = (ResultSetMetaData) rs1.getMetaData();
         int columnCount = metaData.getColumnCount();
-        EcoSystemTable.setRowCount(0);
+        EnterPriseTable.setRowCount(0);
         
         Object[] row = new Object[columnCount];
         while (rs1.next()){
@@ -336,7 +350,7 @@ public class AdminEnterPrise extends javax.swing.JPanel {
                 row[i] = rs1.getObject(i+1);
             }
             //Now add row to table model with that array of objects as an argument
-            EcoSystemTable.addRow(row);
+            EnterPriseTable.addRow(row);
         }
     }
 }
