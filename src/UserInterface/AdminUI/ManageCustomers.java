@@ -6,7 +6,7 @@ package UserInterface.AdminUI;
 
 /**
  *
- * @author monika
+ * @author ASUS
  */
 public class ManageCustomers extends javax.swing.JPanel {
 

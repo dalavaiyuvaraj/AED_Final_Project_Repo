@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author monika
+ * @author ASUS
  */
 public class ConfigureEnterPrise {
     public static ArrayList<ConfigureOrganization> OrganizationList;
