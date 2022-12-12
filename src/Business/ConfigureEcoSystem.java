@@ -13,14 +13,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 /**
  *
- * @author ASUS
+ * @author monika
  */
 public class ConfigureEcoSystem {
     public static ArrayList<ConfigureEnterPrise> EnterPriseList = new ArrayList<>();
     public static ArrayList<ConfigureEcoSystem> EcoSystemList = new ArrayList<>();
     public int EcoSystemID;
     public String EcoSystemName;
-    static Connection ecosystemConnection;
+    static Connection DbConnection;
     
     public ConfigureEcoSystem(){
         
@@ -28,16 +28,16 @@ public class ConfigureEcoSystem {
     }
     
     public static ResultSet GetAllDataFromEcoSystemTable() throws SQLException{
-        ecosystemConnection = mysqlConnection.getConnection();
+        DbConnection = mysqlConnection.getConnection();
         String sql = "SELECT * FROM ecosystems;";
-        PreparedStatement pst = ecosystemConnection.prepareStatement(sql);
+        PreparedStatement pst = DbConnection.prepareStatement(sql);
         return pst.executeQuery();
     }
     
     public static void DeleteDatafromEcoSystemTable(String EcoName) throws SQLException{
-        ecosystemConnection = mysqlConnection.getConnection();
+        DbConnection = mysqlConnection.getConnection();
         String sql = "DELETE FROM ecosystems WHERE EcosystemName = ?;";
-        PreparedStatement pst = ecosystemConnection.prepareStatement(sql);
+        PreparedStatement pst = DbConnection.prepareStatement(sql);
         pst.setString(1, EcoName);
         pst.execute();
         
@@ -46,9 +46,9 @@ public class ConfigureEcoSystem {
     }
     
     public static ResultSet GetAllEcosystemNames() throws SQLException{
-        ecosystemConnection = mysqlConnection.getConnection();
+        DbConnection = mysqlConnection.getConnection();
         String sql = "SELECT EcosystemName FROM ecosystems;";
-        PreparedStatement pst = ecosystemConnection.prepareStatement(sql);
+        PreparedStatement pst = DbConnection.prepareStatement(sql);
         
         
         return pst.executeQuery();
@@ -56,9 +56,9 @@ public class ConfigureEcoSystem {
     }
     
     public static void UpdateDatainEcoSystemTable(int EcoID, String UpdateEcoName, String OriginalEcoName) throws SQLException{
-        ecosystemConnection = mysqlConnection.getConnection();
+        DbConnection = mysqlConnection.getConnection();
         String sql = "UPDATE ecosystems SET EcosystemID = ?, EcosystemName = ? WHERE EcosystemName = ?;";
-        PreparedStatement pst = ecosystemConnection.prepareStatement(sql);
+        PreparedStatement pst = DbConnection.prepareStatement(sql);
         pst.setInt(1, EcoID);
         pst.setString(2, UpdateEcoName );
         pst.setString(3,OriginalEcoName );
@@ -69,30 +69,30 @@ public class ConfigureEcoSystem {
     
     public static ResultSet CheckDBforEcosystem() throws SQLException{
         
-        ecosystemConnection = mysqlConnection.getConnection();
+        DbConnection = mysqlConnection.getConnection();
         String sql1 = """
                       SELECT table_name, table_schema, table_type
                       FROM information_schema.tables
                       WHERE table_name = 'ecosystems' and table_schema = 'projectdatabase'
                       ORDER BY table_name ASC;""";
        
-            PreparedStatement pst = ecosystemConnection.prepareStatement(sql1);
+            PreparedStatement pst = DbConnection.prepareStatement(sql1);
             ResultSet rs = pst.executeQuery();
             return rs;
         
     }
     
     public static void CreateTableforEcosystem() throws SQLException{
-        ecosystemConnection = mysqlConnection.getConnection();
+        DbConnection = mysqlConnection.getConnection();
         String sql2 = "CREATE TABLE ecosystems (EcosystemID int NOT NULL,EcosystemName varchar(100) NOT NULL UNIQUE);";
-        PreparedStatement pst1 = ecosystemConnection.prepareStatement(sql2);
+        PreparedStatement pst1 = DbConnection.prepareStatement(sql2);
         pst1.execute();
         
     }
     public static boolean CreateDatainEcosystemTable(int ecoID,String EcoName) throws SQLException{
-        ecosystemConnection = mysqlConnection.getConnection();
+        DbConnection = mysqlConnection.getConnection();
         String sql3 = "INSERT INTO ecosystems (EcosystemID,EcosystemName) VALUES(?,?);";
-        PreparedStatement pst2 = ecosystemConnection.prepareStatement(sql3);
+        PreparedStatement pst2 = DbConnection.prepareStatement(sql3);
         pst2.setInt(1, ecoID);
         pst2.setString(2,EcoName );
         var isCreated = pst2.execute();
@@ -101,9 +101,9 @@ public class ConfigureEcoSystem {
         
     }
     public static ResultSet CheckEcosystemTableforData(String EcosystemName) throws SQLException{
-        ecosystemConnection = mysqlConnection.getConnection();
+        DbConnection = mysqlConnection.getConnection();
         String sql4 = "SELECT * FROM ecosystems WHERE EcosystemName = ?;";
-        PreparedStatement pst3 = ecosystemConnection.prepareStatement(sql4);
+        PreparedStatement pst3 = DbConnection.prepareStatement(sql4);
         pst3.setString(1, EcosystemName);
         return pst3.executeQuery();
         

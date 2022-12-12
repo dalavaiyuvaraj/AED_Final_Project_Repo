@@ -5,6 +5,7 @@
 package UserInterface.AdminUI;
 
 import Database.mysqlConnection;
+import UserInterface.MainJFrame;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import java.sql.Connection;
@@ -15,7 +16,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author ASUS
+ * @author monika
  */
 public class LoggedJFrame extends javax.swing.JFrame {
 
@@ -46,6 +47,7 @@ public class LoggedJFrame extends javax.swing.JFrame {
         btnCreateEcoSystem = new javax.swing.JButton();
         btnEnterprise = new javax.swing.JButton();
         btnOrganization = new javax.swing.JButton();
+        btnLogout = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -59,9 +61,19 @@ public class LoggedJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnManageStores.setText("Manage Stores");
+        btnManageStores.setText("Manage Store Admins");
+        btnManageStores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManageStoresActionPerformed(evt);
+            }
+        });
 
         btnManageDeliveryAgents.setText("Manage Delivery Agents");
+        btnManageDeliveryAgents.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManageDeliveryAgentsActionPerformed(evt);
+            }
+        });
 
         btnCreateEcoSystem.setText("Manage EcoSystems");
         btnCreateEcoSystem.addActionListener(new java.awt.event.ActionListener() {
@@ -84,19 +96,28 @@ public class LoggedJFrame extends javax.swing.JFrame {
             }
         });
 
+        btnLogout.setText("LogOut");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnManageDeliveryAgents, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnManageStores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnManageCust, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCreateEcoSystem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEnterprise, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnOrganization, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnManageDeliveryAgents, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnManageStores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnManageCust, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCreateEcoSystem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEnterprise, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnOrganization, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnLogout))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -114,7 +135,9 @@ public class LoggedJFrame extends javax.swing.JFrame {
                 .addComponent(btnManageStores)
                 .addGap(18, 18, 18)
                 .addComponent(btnManageDeliveryAgents)
-                .addContainerGap(383, Short.MAX_VALUE))
+                .addGap(57, 57, 57)
+                .addComponent(btnLogout)
+                .addContainerGap(303, Short.MAX_VALUE))
         );
 
         jSplitPane1.setLeftComponent(jPanel1);
@@ -148,22 +171,27 @@ public class LoggedJFrame extends javax.swing.JFrame {
 
     private void btnManageCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageCustActionPerformed
         // TODO add your handling code here:
+        ManageCustomers CustomerCreate = new ManageCustomers();
+        jSplitPane1.setRightComponent(CustomerCreate);
     }//GEN-LAST:event_btnManageCustActionPerformed
 
     private void btnCreateEcoSystemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateEcoSystemActionPerformed
         // TODO add your handling code here:
-        SystemAdminManageEcosystem EcosystemAdmin = null;
-        try {
-            EcosystemAdmin = new SystemAdminManageEcosystem();
-        } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(LoggedJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        
+        SystemAdminManageEcosystem EcosystemAdmin = new SystemAdminManageEcosystem();
         jSplitPane1.setRightComponent(EcosystemAdmin);
 
     }//GEN-LAST:event_btnCreateEcoSystemActionPerformed
 
     private void btnOrganizationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrganizationActionPerformed
-        // TODO add your handling code here:
+        AdminOrganization AdminOrganization = null;
+        try {
+            // TODO add your handling code here:
+            AdminOrganization = new AdminOrganization();
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(LoggedJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        jSplitPane1.setRightComponent(AdminOrganization);
     }//GEN-LAST:event_btnOrganizationActionPerformed
 
     private void btnEnterpriseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnterpriseActionPerformed
@@ -177,6 +205,30 @@ public class LoggedJFrame extends javax.swing.JFrame {
         jSplitPane1.setRightComponent(AdminEnterPrise);
         
     }//GEN-LAST:event_btnEnterpriseActionPerformed
+
+    private void btnManageStoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageStoresActionPerformed
+        ManageStoreAdmins StoreAdmin = null;
+        try {
+            // TODO add your handling code here:
+            StoreAdmin = new ManageStoreAdmins();
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(LoggedJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        jSplitPane1.setRightComponent(StoreAdmin);
+    }//GEN-LAST:event_btnManageStoresActionPerformed
+
+    private void btnManageDeliveryAgentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageDeliveryAgentsActionPerformed
+        // TODO add your handling code here:
+        ManageDeliveryAgents MDA = new ManageDeliveryAgents();
+        jSplitPane1.setRightComponent(MDA);
+    }//GEN-LAST:event_btnManageDeliveryAgentsActionPerformed
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        MainJFrame Logout = new MainJFrame();
+        Logout.setVisible(true);
+    }//GEN-LAST:event_btnLogoutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -216,6 +268,7 @@ public class LoggedJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCreateEcoSystem;
     private javax.swing.JButton btnEnterprise;
+    private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnManageCust;
     private javax.swing.JButton btnManageDeliveryAgents;
     private javax.swing.JButton btnManageStores;

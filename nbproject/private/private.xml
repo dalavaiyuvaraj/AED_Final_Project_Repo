@@ -3,9 +3,30 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ASUS/Documents/NetBeansProjects/AED_Final_Project/src/UserInterface/AdminUI/AdminEnterPrise.java</file>
-            <file>file:/C:/Users/ASUS/Documents/NetBeansProjects/AED_Final_Project/src/UserInterface/AdminUI/LoggedJFrame.java</file>
-            <file>file:/C:/Users/ASUS/Documents/NetBeansProjects/AED_Final_Project/src/UserInterface/AdminUI/SystemAdminManageEcosystem.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/git%20upload/src/UserInterface/AdminUI/AdminEnterPrise.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/git%20upload/src/UserInterface/StoreAdminUI/ViewOrders.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/git%20upload/src/UserInterface/AdminUI/AdminOrganization.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/git%20upload/src/Business/ConfigureOrganization.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/git%20upload/src/UserInterface/CustomerUI/OrderDetails.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/git%20upload/src/UserInterface/DeliveryAgent/FindDAorders.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/git%20upload/src/UserInterface/StoreAdminUI/LoggedSAJFrame.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/git%20upload/src/UserInterface/CustomerUI/NewOrder.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/git%20upload/src/UserInterface/MainJFrame.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/git%20upload/src/Business/ConfigureEnterPrise.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/git%20upload/src/UserInterface/AdminUI/LoggedJFrame.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/git%20upload/src/Business/Order/Order.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/git%20upload/src/Business/ConfigureEcoSystem.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/git%20upload/src/UserInterface/AdminUI/ManageStoreAdmins.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/git%20upload/src/Business/DeliveryMan/DeliveryMan.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/git%20upload/src/UserInterface/DeliveryAgent/LoggedDA.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/git%20upload/src/UserInterface/CustomerUI/LoggedCustomer.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/git%20upload/src/UserInterface/StoreAdminUI/AddStore.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/git%20upload/src/Business/Stores/Products.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/git%20upload/src/UserInterface/AdminUI/ManageDeliveryAgents.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/git%20upload/src/Business/Customer/Customer.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/git%20upload/src/Database/mysqlConnection.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/git%20upload/src/UserInterface/StoreAdminUI/AddProduct.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/git%20upload/src/UserInterface/AdminUI/SystemAdminManageEcosystem.java</file>
         </group>
     </open-files>
 </project-private>

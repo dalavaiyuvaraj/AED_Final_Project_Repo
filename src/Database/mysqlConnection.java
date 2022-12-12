@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author ASUS
+ * @author monika
  */
 public class mysqlConnection {
     static Connection con;

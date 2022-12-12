@@ -52,13 +52,16 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="btnManageDeliveryAgents" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnManageStores" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnManageCust" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnCreateEcoSystem" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnEnterprise" max="32767" attributes="0"/>
-                          <Component id="btnOrganization" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="btnManageDeliveryAgents" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btnManageStores" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btnManageCust" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btnCreateEcoSystem" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btnEnterprise" max="32767" attributes="0"/>
+                              <Component id="btnOrganization" max="32767" attributes="0"/>
+                          </Group>
+                          <Component id="btnLogout" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="34" max="32767" attributes="0"/>
                   </Group>
@@ -79,7 +82,9 @@
                       <Component id="btnManageStores" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnManageDeliveryAgents" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="383" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                      <Component id="btnLogout" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="303" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -95,13 +100,19 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnManageStores">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Manage Stores"/>
+                <Property name="text" type="java.lang.String" value="Manage Store Admins"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnManageStoresActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnManageDeliveryAgents">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Manage Delivery Agents"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnManageDeliveryAgentsActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnCreateEcoSystem">
               <Properties>
@@ -125,6 +136,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOrganizationActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnLogout">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="LogOut"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLogoutActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

@@ -7,17 +7,23 @@ package UserInterface;
 
 import Business.ConfigureEcoSystem;
 import Database.mysqlConnection;
-import UserInterface.AdminUI.AdminWorkAreaPanel;
 import UserInterface.AdminUI.LoggedJFrame;
+import UserInterface.CustomerUI.LoggedCustomer;
+import UserInterface.DeliveryAgent.LoggedDA;
+import UserInterface.StoreAdminUI.LoggedSAJFrame;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author ASUS
+ * @author monika
  */
 public class MainJFrame extends javax.swing.JFrame {
 
@@ -29,6 +35,8 @@ public class MainJFrame extends javax.swing.JFrame {
     ResultSet rs;
     public MainJFrame() {
         initComponents();
+        lblOrganization.setVisible(false);
+        cbxOrganization.setVisible(false);
         
     }
 
@@ -46,6 +54,8 @@ public class MainJFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JTextField();
+        lblOrganization = new javax.swing.JLabel();
+        cbxOrganization = new javax.swing.JComboBox<>();
         cmboxRole = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         btnSubmit = new javax.swing.JButton();
@@ -58,6 +68,8 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jLabel3.setText("Password:");
 
+        lblOrganization.setText("Select Organization:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -65,6 +77,7 @@ public class MainJFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblOrganization, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -72,13 +85,18 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtUserName)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE))
+                    .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
+                    .addComponent(cbxOrganization, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(53, Short.MAX_VALUE)
+                .addContainerGap(18, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblOrganization)
+                    .addComponent(cbxOrganization, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -88,7 +106,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
-        cmboxRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Customer", "StoreManger" }));
+        cmboxRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Customer", "StoreAdmin", "DeliveryAgent" }));
         cmboxRole.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmboxRoleActionPerformed(evt);
@@ -149,7 +167,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
-                .addContainerGap(131, Short.MAX_VALUE))
+                .addContainerGap(125, Short.MAX_VALUE))
         );
 
         pack();
@@ -158,13 +176,25 @@ public class MainJFrame extends javax.swing.JFrame {
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
         // TODO add your handling code here:
         connection = mysqlConnection.getConnection();
-        String RoleSelect = cmboxRole.getSelectedItem().toString().toLowerCase();
-        String Sql1 = "select * from users where email = ? and Password = ? and Role = ?";
-        try{
+        String Name = txtUserName.getText();
+        String Admin = "Admin";
+        String StoreAdmin = "StoreAdmin";
+        String DeliveryAgent = "DeliveryAgent";
+        String RoleSelection = (String) cmboxRole.getSelectedItem();
+        System.out.println(RoleSelection);
+        System.out.println(StoreAdmin);
+        String OrganizationSelect = (String) cbxOrganization.getSelectedItem();
+        String Sql1 = "select * from users where email = ? and Password = ? and Role = ?;";
+        String Sql2 = "SELECT * FROM users WHERE email = ? and Password = ? and Role = ? and Organization = ?;";
+        String Sql3 = "select * from users where email = ? and Password = ? and Role = ?;";
+        String Sql4 = "select * from users where email = ? and Password = ? and Role = ?;";
+        if(RoleSelection == Admin){
+            System.out.print(RoleSelection);
+            try{
             pst = connection.prepareStatement(Sql1);
             pst.setString(1, txtUserName.getText());
             pst.setString(2, txtPassword.getText());
-            pst.setString(3, RoleSelect);
+            pst.setString(3, RoleSelection);
             rs = pst.executeQuery();
             
             if(rs.next()){
@@ -174,20 +204,122 @@ public class MainJFrame extends javax.swing.JFrame {
                 
             }
             else{   
+              JOptionPane.showMessageDialog(null, "Admin UserName and Password Not Matched");
+            }
+            
+            }
+            catch(Exception ex){
+                JOptionPane.showMessageDialog(null, ex);
+            
+            }
+            
+            
+        }
+        else if(RoleSelection == DeliveryAgent){
+            try{
+                pst = connection.prepareStatement(Sql4);
+                pst.setString(1, txtUserName.getText());
+                pst.setString(2, txtPassword.getText());
+                pst.setString(3, RoleSelection);
+                rs = pst.executeQuery();
+            
+                if(rs.next()){
+                    this.dispose();
+                    LoggedDA DALogin = new LoggedDA(Name);
+                    DALogin.setVisible(true);
+                
+                }
+                else{   
+                    JOptionPane.showMessageDialog(null, "Customer UserName and Password Not Matched");
+                }
+            
+            }
+            catch(Exception ex){
+                JOptionPane.showMessageDialog(null, ex);
+            
+            }
+        }
+        else if(RoleSelection == StoreAdmin){
+            System.out.println("Hello");
+            try{
+            PreparedStatement pst1 = connection.prepareStatement(Sql2);
+            pst1.setString(1, txtUserName.getText());
+            pst1.setString(2, txtPassword.getText());
+            pst1.setString(3, RoleSelection);
+            pst1.setString(4, OrganizationSelect);
+            ResultSet rs1 = pst1.executeQuery();
+            
+            if(rs1.next()){
+                this.dispose();
+                LoggedSAJFrame StoreAdminPage = new LoggedSAJFrame(OrganizationSelect);
+                StoreAdminPage.setVisible(true);
+                
+            }
+            else{   
               JOptionPane.showMessageDialog(null, "UserName and Password Not Matched");
             }
             
-        }
-        catch(Exception ex){
-            JOptionPane.showMessageDialog(null, ex);
+            }
+            catch(Exception ex){
+                JOptionPane.showMessageDialog(null, ex);
+            
+            }
             
         }
+        else{
+            try{
+                pst = connection.prepareStatement(Sql3);
+                pst.setString(1, txtUserName.getText());
+                pst.setString(2, txtPassword.getText());
+                pst.setString(3, RoleSelection);
+                rs = pst.executeQuery();
+            
+                if(rs.next()){
+                    this.dispose();
+                    LoggedCustomer CustomerLogin = new LoggedCustomer(Name);
+                    CustomerLogin.setVisible(true);
+                
+                }
+                else{   
+                    JOptionPane.showMessageDialog(null, "Customer UserName and Password Not Matched");
+                }
+            
+            }
+            catch(Exception ex){
+                JOptionPane.showMessageDialog(null, ex);
+            
+            }
+            
+        }
+        
         
         
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     private void cmboxRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmboxRoleActionPerformed
         // TODO add your handling code here:
+        String SelectRole1 = (String) cmboxRole.getSelectedItem();
+        String StoreAdmin1 = "StoreAdmin";
+        String Admin1 = "Admin";
+        
+        if(SelectRole1 == StoreAdmin1){
+            lblOrganization.setVisible(true);
+            cbxOrganization.setVisible(true);
+            try {
+                PopulateOrganizations();
+            } catch (SQLException ex) {
+                Logger.getLogger(MainJFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+        else if(SelectRole1 == Admin1){
+            lblOrganization.setVisible(false);
+            cbxOrganization.setVisible(false);
+        }
+        else{
+            lblOrganization.setVisible(false);
+            cbxOrganization.setVisible(false);
+        }
     }//GEN-LAST:event_cmboxRoleActionPerformed
 
     /**
@@ -227,6 +359,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSubmit;
+    private javax.swing.JComboBox<String> cbxOrganization;
     private javax.swing.JComboBox<String> cmboxRole;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -234,7 +367,23 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblOrganization;
     private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtUserName;
     // End of variables declaration//GEN-END:variables
+
+    private void PopulateOrganizations() throws SQLException {
+        DefaultComboBoxModel OrganizationSelect = (DefaultComboBoxModel) cbxOrganization.getModel();
+        OrganizationSelect.removeAllElements();
+        String Sql = "SELECT Organization_Name FROM organizations;";
+        connection = mysqlConnection.getConnection();
+        PreparedStatement pst = connection.prepareStatement(Sql);
+        ResultSet rs = pst.executeQuery();
+        while(rs.next()){
+            OrganizationSelect.addElement(rs.getString(1));
+            
+        }
+    }
+
+    
 }
