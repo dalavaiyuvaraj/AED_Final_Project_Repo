@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author monika
+ * @author ASUS
  */
 public class SystemAdminManageEcosystem extends javax.swing.JPanel {
 
@@ -28,9 +28,9 @@ public class SystemAdminManageEcosystem extends javax.swing.JPanel {
     Connection conn;
     PreparedStatement pst;
     ResultSet rs;
-    public SystemAdminManageEcosystem(){
+    public SystemAdminManageEcosystem() throws SQLException {
         initComponents();
-        
+        populateEcosystemTable();
     }
 
     /**
@@ -51,7 +51,6 @@ public class SystemAdminManageEcosystem extends javax.swing.JPanel {
         tblEcosystem = new javax.swing.JTable();
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
-        btnRefresh = new javax.swing.JButton();
 
         jLabel1.setText("Ecosystem ID");
 
@@ -91,13 +90,6 @@ public class SystemAdminManageEcosystem extends javax.swing.JPanel {
             }
         });
 
-        btnRefresh.setText("Refresh");
-        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRefreshActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -111,10 +103,7 @@ public class SystemAdminManageEcosystem extends javax.swing.JPanel {
                             .addComponent(jLabel2))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnCreate)
-                                .addGap(114, 114, 114)
-                                .addComponent(btnRefresh))
+                            .addComponent(btnCreate)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txtEcoSystemID)
                                 .addComponent(txtEcoSystemName, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -140,9 +129,7 @@ public class SystemAdminManageEcosystem extends javax.swing.JPanel {
                     .addComponent(jLabel2)
                     .addComponent(txtEcoSystemName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCreate)
-                    .addComponent(btnRefresh))
+                .addComponent(btnCreate)
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
@@ -317,20 +304,10 @@ public class SystemAdminManageEcosystem extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnDeleteActionPerformed
 
-    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-        try {
-            // TODO add your handling code here:
-            populateEcosystemTable();
-        } catch (SQLException ex) {
-            Logger.getLogger(SystemAdminManageEcosystem.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnRefreshActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCreate;
     private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
